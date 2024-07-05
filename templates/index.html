@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smoki' BBQ Feedback</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-box">
+        <h1 class="main-header">Smoki' BBQ</h1>
+      </div>
+    </header>
+
+    <main>
+      <section class="feedback-section">
+        <div class="feedback-form">
+          <h2 class="section-title">Leave a Feedback</h2>
+          <form action="{{ url_for('submit_feedback') }}" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="feedback">Feedback:</label>
+            <textarea
+              id="feedback"
+              name="feedback"
+              rows="5"
+              required
+            ></textarea>
+
+            <input class="submit-btn" type="submit" value="Submit" />
+          </form>
+        </div>
+
+        <div class="feedback-display">
+          <h2 class="section-title">Customer Feedback</h2>
+          <p class="menu-para">
+            We value our customers' opinions and feedback. Please share your
+            thoughts about your experience at Smoki' BBQ. Your reviews help us
+            improve and provide the best BBQ experience possible.
+          </p>
+          <div class="feedback-container">
+            <ul>
+              {% for item in feedback %}
+              <li>
+                <div class="feedback-item">
+                  <div class="feedback-avatar">
+                    <img
+                      src="{{ url_for('static', filename='images/avatar.jpg') }}"
+                      alt="Avatar"
+                      class="avatar"
+                    />
+                  </div>
+                  <div class="feedback-content">
+                    <strong>{{ item[0] }}</strong>
+                    <p>{{ item[1] }}</p>
+                    <span class="feedback-date">{{ item[2] }}</span>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer">
+        <h3 class="footer-head">Smoki' BBQ</h3>
+        <nav class="footer-nav">
+          <ul>
+            <li><a href="/index.html">HOME</a></li>
+            <li><a href="/menu.html">MENU</a></li>
+            <li><a href="/reserve.html">RESERVATION</a></li>
+            <li><a href="/about.html">ABOUT US</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
