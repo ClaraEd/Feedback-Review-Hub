@@ -120,7 +120,8 @@ input[type="submit"]:hover {
 
 .feedback-display .feedback-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -142,6 +143,7 @@ input[type="submit"]:hover {
 .feedback-content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .feedback-content strong {
@@ -157,6 +159,47 @@ input[type="submit"]:hover {
   font-size: 0.85em;
   color: #666;
   align-self: flex-end;
+}
+
+/* Remove Button Styles */
+.delete-form {
+  margin-left: 10px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.remove-btn:hover {
+  color: red;
+  transform: scale(1.1);
+}
+
+/* Edit Button Styles */
+.edit-btn {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-left: 10px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.edit-btn:hover {
+  color: #1e90ff;
+  transform: scale(1.1);
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  align-items: center;
 }
 
 /* Footer Styles */
