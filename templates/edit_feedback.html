@@ -13,80 +13,43 @@
     />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smoki' BBQ Feedback</title>
+    <title>Edit Feedback</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <header>
       <div class="header-box">
-        <h1 class="main-header">Smoki' BBQ</h1>
+        <h1 class="main-header">Edit Feedback</h1>
       </div>
     </header>
 
     <main>
       <section class="feedback-section">
         <div class="feedback-form">
-          <h2 class="section-title">Leave a Feedback</h2>
-          <form id="feedbackForm">
+          <h2 class="section-title">Update Your Feedback</h2>
+          <form
+            action="{{ url_for('edit_feedback', feedback_id=feedback[0]) }}"
+            method="POST"
+          >
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value="{{ feedback[1] }}"
+              disabled
+            />
 
             <label for="feedback">Feedback:</label>
-            <textarea
-              id="feedback"
-              name="feedback"
-              rows="5"
-              required
-            ></textarea>
+            <textarea id="feedback" name="feedback" rows="5" required>
+{{ feedback[2] }}</textarea
+            >
 
-            <input class="submit-btn" type="submit" value="Submit" />
+            <input class="submit-btn" type="submit" value="Update" />
           </form>
-        </div>
-
-        <div class="feedback-display">
-          <h2 class="section-title">Customer Feedback</h2>
-          <p class="menu-para">
-            We value our customers' opinions and feedback. Please share your
-            thoughts about your experience at Smoki' BBQ. Your reviews help us
-            improve and provide the best BBQ experience possible.
-          </p>
-          <div class="feedback-container">
-            <ul id="feedbackList">
-              {% for item in feedback %}
-              <li id="feedback-{{ item[0] }}">
-                <div class="feedback-item">
-                  <div class="feedback-avatar">
-                    <img
-                      src="{{ url_for('static', filename='images/avatar.jpg') }}"
-                      alt="Avatar"
-                      class="avatar"
-                    />
-                  </div>
-                  <div class="feedback-content">
-                    <strong>{{ item[1] }}</strong>
-                    <p>{{ item[2] }}</p>
-                  </div>
-                  <div class="button-container">
-                    <form class="delete-form" data-id="{{ item[0] }}">
-                      <button type="button" class="remove-btn">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </form>
-                    <a
-                      href="{{ url_for('edit_feedback', feedback_id=item[0]) }}"
-                      class="edit-btn"
-                      ><i class="fas fa-edit"></i
-                    ></a>
-                  </div>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
         </div>
       </section>
     </main>
@@ -104,37 +67,5 @@
         </nav>
       </div>
     </footer>
-
-    <script>
-      $(document).ready(function () {
-        // Handle feedback form submission
-        $("#feedbackForm").submit(function (event) {
-          event.preventDefault(); // Prevent default form submission
-          $.ajax({
-            type: "POST",
-            url: '{{ url_for("submit_feedback") }}',
-            data: $(this).serialize(),
-            success: function (response) {
-              // Reload the feedback list
-              $("#feedbackList").load(location.href + " #feedbackList > *");
-              // Clear the form
-              $("#feedbackForm")[0].reset();
-            },
-          });
-        });
-
-        // Handle delete button click
-        $(document).on("click", ".delete-form .remove-btn", function () {
-          var feedbackId = $(this).closest(".delete-form").data("id");
-          $.ajax({
-            type: "POST",
-            url: "/delete_feedback/" + feedbackId,
-            success: function (response) {
-              $("#feedback-" + feedbackId).remove();
-            },
-          });
-        });
-      });
-    </script>
   </body>
 </html>

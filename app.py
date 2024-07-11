@@ -112,6 +112,10 @@ def edit_feedback(feedback_id):
     feedback_item = cursor.fetchone()
     conn.close()
     
+    if feedback_item is None:
+        return "Feedback not found", 404
+    
+    print(f"Fetched feedback item: {feedback_item}")  # Debugging log
     return render_template('edit_feedback.html', feedback=feedback_item)
 
 if __name__ == '__main__':
